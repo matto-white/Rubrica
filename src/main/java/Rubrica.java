@@ -20,5 +20,24 @@ public class Rubrica {
     public int size(){
         return rubrica.size();
     }
+    public void aggiungi(Persona p){
+        String key = p.nome.toLowerCase() + "." + p.cognome.toLowerCase();
+        System.out.println("Added!\nKey = " + key);
+        add(key, p);
+    }
+    public void rimuovi(String nome, String cognome){
+        Persona presente = cerca(nome, cognome);
+        if(presente!=null){
+            String key = nome.toLowerCase() + "." + cognome.toLowerCase();
+            System.out.println("Removed!\nKey = " + key);
+            rm(key);
+        }else{
+            System.out.println("Contatto inesistente");
+        }
+    }
+    public Persona cerca(String nome, String cognome){
+        String key = nome.toLowerCase() + "." + cognome.toLowerCase();
+        return get(key);
+    }
 
 }
