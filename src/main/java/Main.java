@@ -1,24 +1,53 @@
 import java.util.*;
+import java.io.*;
 public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         Rubrica rubrica = new Rubrica();
 
         boolean exit=false, start=true;
-        int op;
+        int op, sceltaFile;
+        do{
+            System.out.println("Vuoi caricare i dati da file? Si(1)/No(0)");
+            sceltaFile = scanner.nextInt();
+            scanner.nextLine();
+        }while(sceltaFile!=0 && sceltaFile!=1);
+        if(sceltaFile==1){
+            try{
+                FileInputStream f = new FileInputStream("Rubrica.dat");
+                ObjectInputStream fIN = new ObjectInputStream(f);
+                while (true){
+                    try{
+                        Hashtable<String, Persona> p = (Hashtable<String, Persona>) fIN.readObject();
+                        rubrica.rubrica = p;
+                    }
+                    catch(EOFException | ClassNotFoundException e)
+                    {
+                        // interrompe il ciclo
+                        break;
+                    }
+                }
+                f.close();
+                start=false;
+            }catch (IOException e) {
+                System.out.println("Eccezione: " + e.getMessage());
+            }
+        }
+
         do{
             if(start==true){
                 op=0;
                 start=false;
             }else{
                 do {
-                    System.out.println("Che operazione vuoi fare?\n0) Aggiungi contatto\n1) Rimuovi contatto\n2) Cerca contatto\n3) Stampa l'intera rubrica");
+                    System.out.println("Che operazione vuoi fare?\n0) Aggiungi contatto\n1) Rimuovi contatto\n2) Cerca contatto\n3) Stampa l'intera rubrica\n4) Salva configurazione corrente su file\n5) Esci") ;
                     op = scanner.nextInt();
                     scanner.nextLine();
-                }while(op<0 || op>3);
+                }while(op<0 || op>5);
             }
             switch(op){
                 case 0:
+                    System.out.println("Inserisci un contatto");
                     System.out.println("Inserisci il Nome");
                     String nome = scanner.nextLine();
                     System.out.println("Inserisci il Cognome");
@@ -52,9 +81,24 @@ public class Main {
                     Iterator<String> itr = keys.iterator();
                     while(itr.hasNext()){
                         String str = itr.next();
-                        System.out.println(rubrica.get(str));
+                        System.out.println(str + " " + rubrica.get(str));
                     }
                     break;
+                case 4:
+                    try {
+                        FileOutputStream fo = new FileOutputStream("Rubrica.dat");
+                        ObjectOutputStream fOUT = new ObjectOutputStream(fo);
+
+                        fOUT.writeObject(rubrica.rubrica);
+                        fOUT.flush();
+                        fo.close();
+                    } catch (IOException e) {
+                        System.out.println("Eccezione: " + e.getMessage());
+                    }
+                    break;
+                case 5:
+                    exit=true;
+                default:
             }
         }while(exit==false);
 

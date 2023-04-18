@@ -1,6 +1,8 @@
+import java.io.Serializable;
 import java.util.*;
+import java.io.*;
 
-public class Rubrica {
+public class Rubrica implements Serializable {
 
     /**HashTable<String, Persona> contenente come chiave (tutto minuscolo) nome.cognome*/
     Hashtable<String, Persona> rubrica;

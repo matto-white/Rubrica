@@ -1,4 +1,6 @@
-public class Persona {
+import java.io.Serializable;
+
+public class Persona implements Serializable {
     String nome, cognome, numero;
 
     public Persona(String nome, String cognome, String numero) {
@@ -33,10 +35,8 @@ public class Persona {
 
     @Override
     public String toString() {
-        return "Persona{" +
-                "nome='" + nome + '\'' +
+        return  "nome='" + nome + '\'' +
                 ", cognome='" + cognome + '\'' +
-                ", numero=" + numero +
-                '}' + '\n';
+                ", numero=" + numero + '\n';
     }
 }
