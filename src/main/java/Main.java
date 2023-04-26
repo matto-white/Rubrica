@@ -8,28 +8,24 @@ public class Main {
         boolean exit=false, start=true;
         int op, sceltaFile;
         do{
-            System.out.println("Vuoi caricare i dati da file? Si(1)/No(0)");
-            sceltaFile = scanner.nextInt();
-            scanner.nextLine();
+            //sceltaFile=2;
+            //try{
+                System.out.println("Vuoi caricare i dati da file? Si(1)/No(0)");
+                sceltaFile = scanner.nextInt();
+                scanner.nextInt();
+            //}catch(InputMismatchException i){
+                //System.out.println("Eccezione: " + i);
+            //}
         }while(sceltaFile!=0 && sceltaFile!=1);
         if(sceltaFile==1){
             try{
                 FileInputStream f = new FileInputStream("Rubrica.dat");
                 ObjectInputStream fIN = new ObjectInputStream(f);
-                while (true){
-                    try{
-                        Hashtable<String, Persona> p = (Hashtable<String, Persona>) fIN.readObject();
-                        rubrica.rubrica = p;
-                    }
-                    catch(EOFException | ClassNotFoundException e)
-                    {
-                        // interrompe il ciclo
-                        break;
-                    }
-                }
+                Hashtable<String, Persona> p = (Hashtable<String, Persona>) fIN.readObject();
+                rubrica.rubrica = p;
                 f.close();
                 start=false;
-            }catch (IOException e) {
+            }catch (ClassNotFoundException | IOException e) {
                 System.out.println("Eccezione: " + e.getMessage());
             }
         }
