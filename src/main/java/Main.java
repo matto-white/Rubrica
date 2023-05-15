@@ -8,14 +8,15 @@ public class Main {
         boolean exit=false, start=true;
         int op, sceltaFile;
         do{
-            //sceltaFile=2;
-            //try{
+            sceltaFile=2;
+            try{
                 System.out.println("Vuoi caricare i dati da file? Si(1)/No(0)");
                 sceltaFile = scanner.nextInt();
-                scanner.nextInt();
-            //}catch(InputMismatchException i){
-                //System.out.println("Eccezione: " + i);
-            //}
+            }catch(InputMismatchException i){
+                System.out.println("Eccezione: " + i);
+                scanner.reset();
+                scanner.next();
+            }
         }while(sceltaFile!=0 && sceltaFile!=1);
         if(sceltaFile==1){
             try{
